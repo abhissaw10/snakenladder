@@ -1,12 +1,10 @@
 package com.mygame;
 
+import java.util.List;
+
 public class GameManager {
     public static void main(String[] args) {
-        Game game = GameFactory.createGame(10,2,2,2);
-
-        game.addPlayer(PlayerFactory.createPlayer("Abhishek"));
-        game.addPlayer(PlayerFactory.createPlayer("Shami"));
-
+        Game game = GameFactory.createGame(List.of("Abhishek","Shami"));
         game.start();
     }
 }

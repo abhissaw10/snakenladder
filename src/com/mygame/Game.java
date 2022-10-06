@@ -1,24 +1,22 @@
 package com.mygame;
 
+import java.util.List;
+
 public class Game {
+
+
     Board board;
-    Player[] players;
+    List<Player> players;
     Status status;
 
     Dice dice;
 
-    int actualPlayerCount;
 
-
-    public Game(int boardSize, int snakeCount, int ladderCount, int playerCount, int config) {
-        board = new Board(boardSize,snakeCount,ladderCount,config);
-        players = new Player[playerCount];
-        status = Status.NOT_STARTED;
-        dice = new Dice();
-    }
-
-    void addPlayer(Player player){
-        players[++actualPlayerCount]=player;
+    public Game(GameBuilder builder){
+        this.board=builder.board;
+        this.players=builder.players;
+        this.dice=builder.dice;
+        this.status=Status.NOT_STARTED;
     }
 
     void start(){

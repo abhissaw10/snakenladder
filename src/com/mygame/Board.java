@@ -3,35 +3,55 @@ package com.mygame;
 import java.util.ArrayList;
 
 public class Board {
-    int size=0;
-    int snakeCount=0;
-    int ladderCount=0;
-    //Cell[] cells;
-    /*Snake[] snakes;
-    Ladder[] ladders;*/
+
+    Cell[][] cells;
+
     ArrayList<Commute> snakesOrLadders;
-    public Board(int size, int numSnakes, int numLadders, int config){
-        this.size=size;
+
+    BoardConfig boardConfig;
+
+    public void createBoard(BoardConfig config){
+        boardConfig=config;
+        if(config.boardType == 1){
+            this.cells=createCells();
+
+        }
         snakesOrLadders = new ArrayList();
-        //ladders = new Ladder[numLadders];
-        addSnakesAndLadders(config);
+        addSnakesAndLadders();
     }
 
+    private Cell[][] createCells() {
 
-    private void addSnakesAndLadders(int config) {
-        if(config==1){
+        cells = new Cell[10][10];
+        int i=0;
+        boolean colorBlack=false;
+        boolean odd = false;
+        for(int j=9;i>=0;i--){
+            if(odd) {
+                for (int k = 0; k < 9; k++) {
+                    cells[j][k] = CellFactory.createCell(++i, colorBlack ? CellColor.BLACK : CellColor.WHITE);
+                    colorBlack = !colorBlack;
+                }
+
+            }else{
+                for(int k=9;k>=0;k--){
+                    cells[j][k] = CellFactory.createCell(++i, colorBlack ? CellColor.BLACK : CellColor.WHITE);
+                    colorBlack = !colorBlack;
+                }
+            }
+            odd=!odd;
+
+        }
+        return cells;
+    }
+
+    private void addSnakesAndLadders() {
+        if(boardConfig.config==1){
             addLadder(1,5);
             addLadder(4,9);
             addSnake(8,3);
             addSnake(6,2);
         }
-    }
-
-    private void addSnakesAndLaddersDefault() {
-            addLadder(1,5);
-            addLadder(4,9);
-            addSnake(8,3);
-            addSnake(6,2);
     }
 
 
@@ -54,24 +74,4 @@ public class Board {
         }
         return -1;
     }
-
-
-
-   /* int isSnakeStart(int position){
-        for(Commute s: snakes){
-            if(s.start == position){
-                return s.end;
-            }
-        }
-        return -1;
-    }
-
-    int isLadderStart(int position){
-        for(Commute s: ladders){
-            if(s.start == position){
-                return s.end;
-            }
-        }
-        return -1;
-    }*/
 }

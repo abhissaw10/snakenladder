@@ -1,7 +1,12 @@
 package com.mygame;
 
+import java.util.List;
+
 public class GameFactory {
-    public static Game createGame(int size, int snakes,int ladders, int players){
-        return new Game(size,snakes,ladders,players);
+    public static Game createGame(List<String> players){
+        List<Player> playersList = players.stream().map(s -> PlayerFactory.createPlayer(s)).toList();
+        return new GameBuilder()
+                .setPlayers(playersList)
+                .build();
     }
 }
